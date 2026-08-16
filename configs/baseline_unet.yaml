@@ -1,0 +1,100 @@
+# Small U-Net Baseline Configuration
+
+seed: 42
+device: auto
+
+dataset:
+  gt_dir: train
+  noisy_lr_dir: NoisyLR
+  split_dir: splits
+
+model:
+  name: small_unet
+  in_channels: 1
+  out_channels: 1
+  base_features: 32
+
+degradation:
+  blur:
+    enabled: true
+    sigma_min: 0.7
+    sigma_max: 1.3
+  downsample:
+    scale: 2
+    method: gaussian_prefilter
+  noise:
+    signal_dependent:
+      enabled: true
+      scale_min: 0.3
+      scale_max: 2.0
+    additive:
+      enabled: true
+      sigma_min: 0.002
+      sigma_max: 0.05
+    multiplicative:
+      enabled: true
+      alpha_min: 0.02
+      alpha_max: 0.12
+    heavy_tail:
+      enabled: false
+    mix_weights:
+      signal_dependent: 0.40
+      additive: 0.30
+      multiplicative: 0.20
+      mixed: 0.10
+      low_noise: 0.0
+
+loss:
+  charbonnier:
+    weight: 1.0
+    epsilon: 1.0e-6
+  ssim:
+    weight: 0.1
+    window_size: 11
+  gradient:
+    weight: 0.0
+  frequency:
+    weight: 0.0
+
+training:
+  batch_size: 16
+  patch_size_gt: 128
+  patch_size_lr: 64
+  epochs: 100
+  optimizer:
+    type: AdamW
+    lr: 0.001
+    weight_decay: 0.0001
+    betas: [0.9, 0.999]
+  scheduler:
+    type: cosine
+    warmup_epochs: 3
+    min_lr: 1.0e-6
+  mixed_precision: true
+  num_workers: 4
+  pin_memory: true
+  early_stopping:
+    enabled: true
+    patience: 20
+    metric: psnr
+
+validation:
+  interval: 5
+  batch_size: 4
+
+augmentation:
+  horizontal_flip: true
+  vertical_flip: true
+  rotation_90: true
+  random_crop: true
+
+checkpointing:
+  save_dir: experiments/small_unet
+  save_best: true
+  save_last: true
+  metrics: [psnr, ssim]
+
+inference:
+  batch_size: 16
+  tta:
+    enabled: false

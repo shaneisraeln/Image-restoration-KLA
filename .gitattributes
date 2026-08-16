@@ -1,0 +1,2 @@
+experiments/wide_nafnet_64/checkpoints/best_psnr.pth filter=lfs diff=lfs merge=lfs -text
+experiments/wide_nafnet_64/checkpoints/*.pth filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,46 @@
+{
+  "real": {
+    "pixel_stats": {
+      "mean_of_means": 0.4427420272305608,
+      "std_of_means": 0.16585474086595708,
+      "mean_of_stds": 0.2202688201982528,
+      "mean_min": -0.022180111598627265,
+      "mean_max": 1.4333793696761132,
+      "mean_frac_below_0": 0.00660125732421875,
+      "mean_frac_above_1": 0.0308013916015625
+    },
+    "frequency_stats": {
+      "mean_low_freq": 0.16673927109064535,
+      "mean_mid_freq": 0.27567608172353447,
+      "mean_high_freq": 0.5575846471858198
+    },
+    "noise_stats": {
+      "mean_noise_level": 0.080278010715629,
+      "std_noise_level": 0.036752373867744596,
+      "min_noise_level": 0.005076131579763718,
+      "max_noise_level": 0.2529802059049161
+    }
+  },
+  "synthetic": {
+    "pixel_stats": {
+      "mean_of_means": 0.47741704478859903,
+      "std_of_means": 0.17500151091700789,
+      "mean_of_stds": 0.18860878467559813,
+      "mean_min": -0.011032085493206977,
+      "mean_max": 1.086571626663208,
+      "mean_frac_below_0": 0.006356201171875,
+      "mean_frac_above_1": 0.016458740234375
+    },
+    "frequency_stats": {
+      "mean_low_freq": 0.243416250013099,
+      "mean_mid_freq": 0.296287635279122,
+      "mean_high_freq": 0.4602961147077784
+    },
+    "noise_stats": {
+      "mean_noise_level": 0.055695165713642865,
+      "std_noise_level": 0.03118579516221803,
+      "min_noise_level": 0.0059375134859374935,
+      "max_noise_level": 0.14812439083611198
+    }
+  }
+}

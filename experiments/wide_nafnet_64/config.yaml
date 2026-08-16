@@ -1,0 +1,103 @@
+augmentation:
+  horizontal_flip: true
+  random_crop: true
+  rotation_90: true
+  vertical_flip: true
+checkpointing:
+  metrics:
+  - psnr
+  - ssim
+  save_best: true
+  save_dir: experiments/wide_nafnet_64
+  save_last: true
+dataset:
+  gt_dir: train
+  noisy_lr_dir: NoisyLR
+  split_dir: splits
+degradation:
+  blur:
+    enabled: true
+    sigma_max: 1.2
+    sigma_min: 0.6
+  downsample:
+    method: gaussian_prefilter
+    scale: 2
+  noise:
+    additive:
+      enabled: true
+      sigma_max: 0.08
+      sigma_min: 0.005
+    heavy_tail:
+      df_max: 8.0
+      df_min: 3.0
+      enabled: true
+      probability: 0.15
+    mix_weights:
+      additive: 0.2
+      low_noise: 0.05
+      mixed: 0.2
+      multiplicative: 0.15
+      signal_dependent: 0.4
+    multiplicative:
+      alpha_max: 0.15
+      alpha_min: 0.03
+      enabled: true
+    signal_dependent:
+      enabled: true
+      scale_max: 1.5
+      scale_min: 0.4
+device: auto
+inference:
+  batch_size: 4
+  tta:
+    enabled: false
+loss:
+  charbonnier:
+    epsilon: 1.0e-06
+    weight: 1.0
+  frequency:
+    weight: 0.0
+  gradient:
+    weight: 0.0
+  mse:
+    weight: 0.0
+  ssim:
+    weight: 0.0
+model:
+  dropout_rate: 0.0
+  in_channels: 1
+  name: noise_aware_nafnet
+  noise_conditioning:
+    mode: spatial
+  num_blocks:
+  - 2
+  - 4
+  - 8
+  - 8
+  out_channels: 1
+  width: 64
+seed: 42
+training:
+  batch_size: 4
+  early_stopping:
+    enabled: false
+  epochs: 150
+  mixed_precision: true
+  num_workers: 4
+  optimizer:
+    betas:
+    - 0.9
+    - 0.999
+    lr: 0.0002
+    type: AdamW
+    weight_decay: 0.0001
+  patch_size_gt: 128
+  patch_size_lr: 64
+  pin_memory: true
+  scheduler:
+    min_lr: 1.0e-06
+    type: cosine
+    warmup_epochs: 5
+validation:
+  batch_size: 2
+  interval: 10

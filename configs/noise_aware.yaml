@@ -1,0 +1,127 @@
+# Noise-Aware NAFNet Configuration
+# Primary training configuration for the evidence-preserving restoration system
+
+seed: 42
+device: auto  # auto, cuda, cpu
+
+# Dataset
+dataset:
+  gt_dir: train
+  noisy_lr_dir: NoisyLR
+  split_dir: splits
+
+# Model
+model:
+  name: noise_aware_nafnet
+  in_channels: 1
+  out_channels: 1
+  width: 48
+  num_blocks: [2, 4, 8, 8]
+  dropout_rate: 0.0
+  noise_conditioning:
+    mode: spatial  # none, scalar, spatial
+
+# Degradation
+degradation:
+  blur:
+    enabled: true
+    sigma_min: 0.7
+    sigma_max: 1.3
+  downsample:
+    scale: 2
+    method: gaussian_prefilter
+  noise:
+    signal_dependent:
+      enabled: true
+      scale_min: 0.3
+      scale_max: 2.0
+    additive:
+      enabled: true
+      sigma_min: 0.002
+      sigma_max: 0.05
+    multiplicative:
+      enabled: true
+      alpha_min: 0.02
+      alpha_max: 0.12
+    heavy_tail:
+      enabled: true
+      probability: 0.2
+      df_min: 3.0
+      df_max: 10.0
+    mix_weights:
+      signal_dependent: 0.34
+      additive: 0.22
+      multiplicative: 0.16
+      mixed: 0.26
+      low_noise: 0.02
+
+# Loss
+loss:
+  charbonnier:
+    weight: 1.0
+    epsilon: 1.0e-6
+  ssim:
+    weight: 0.0
+    window_size: 11
+  gradient:
+    weight: 0.0
+  frequency:
+    weight: 0.0
+    bands:
+      low: 1.0
+      mid: 1.0
+      high: 0.3
+
+# Training
+training:
+  batch_size: 8
+  patch_size_gt: 128
+  patch_size_lr: 64
+  epochs: 100
+  optimizer:
+    type: AdamW
+    lr: 0.0001
+    weight_decay: 0.0001
+    betas: [0.9, 0.999]
+  scheduler:
+    type: cosine
+    warmup_epochs: 5
+    min_lr: 1.0e-6
+  mixed_precision: true
+  num_workers: 4
+  pin_memory: true
+  early_stopping:
+    enabled: false
+    patience: 30
+    metric: psnr
+  curriculum:
+    stage1_epochs: 50
+    stage2_epochs: 100
+    stage3_epochs: 50
+
+# Validation
+validation:
+  interval: 5
+  batch_size: 4
+
+# Augmentation
+augmentation:
+  horizontal_flip: true
+  vertical_flip: true
+  rotation_90: true
+  random_crop: true
+
+# Checkpointing
+checkpointing:
+  save_dir: experiments/noise_aware_nafnet
+  save_best: true
+  save_last: true
+  metrics: [psnr, ssim]
+
+# Inference
+inference:
+  batch_size: 8
+  tta:
+    enabled: false
+  ensemble:
+    enabled: false

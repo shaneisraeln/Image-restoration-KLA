@@ -1,0 +1,14 @@
+# Bicubic Baseline Configuration
+# No model - just bicubic upsampling
+
+seed: 42
+device: auto
+
+dataset:
+  gt_dir: train
+  noisy_lr_dir: NoisyLR
+  split_dir: splits
+
+model:
+  name: bicubic
+  description: "Simple bicubic 2x upsampling baseline"
