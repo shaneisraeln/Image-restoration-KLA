@@ -3,6 +3,7 @@
 **Team**: Porygon  
 **Challenge**: KLA Problem Statement 01 — AI-Based Image Restoration  
 **Hackathon**: i4C 2026
+**Members**: Shane &Sham 
 
 ---
 
