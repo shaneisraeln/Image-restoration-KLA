@@ -1,6 +1,6 @@
 # AI-Based Restoration of Degraded Inspection Images
 
-**Team**: [Your Team Name]  
+**Team**: Porygon  
 **Challenge**: KLA Problem Statement 01 — AI-Based Image Restoration  
 **Hackathon**: i4C 2026
 
